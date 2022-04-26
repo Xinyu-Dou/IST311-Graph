@@ -82,18 +82,18 @@ public class LocationGraph {
 
     public Double findDistanceDepthFirst(String locationA, String locationB){
         ArrayList<Vertex> visited = new ArrayList<>();
-        Queue<Vertex> queue = new LinkedList<>();
-        Queue<Double> distance = new LinkedList<>();
+        Stack<Vertex> stack = new Stack();
+        Stack<Double> distance = new Stack();
 
         int index = this.getIndexOfVertex(locationA);
 
-        queue.add(this.vertices.get(index));
+        stack.push(this.vertices.get(index));
         visited.add(this.vertices.get(index));
         distance.add(0.0);
 
-        while(!queue.isEmpty()){
-            Vertex current = queue.remove();
-            Double curr_dis = distance.remove();
+        while(!stack.isEmpty()){
+            Vertex current = stack.pop();
+            Double curr_dis = distance.pop();
 
             if(current.locationName.equals(locationB)){
                 return curr_dis;
@@ -101,7 +101,7 @@ public class LocationGraph {
 
             for(Edge edge: current.edges){
                 if(!visited.contains(edge.vertex)){
-                    queue.add(edge.vertex);
+                    stack.push(edge.vertex);
                     visited.add(edge.vertex);
                     Double new_dis = 0.0;
                     new_dis = curr_dis + edge.distance;
