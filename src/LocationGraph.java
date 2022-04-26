@@ -113,6 +113,19 @@ public class LocationGraph {
         return -1.0;
     }
 
+    public Boolean detectCycle(){
+        ArrayList<Vertex> visited = new ArrayList<>();
+        Queue<Vertex> queue = new LinkedList<>();
+        for (Vertex toCycle: this.vertices){
+            while(!queue.isEmpty()) {
+0            }
+            //delete all the things in arraylist and queue
+            queue.clear();
+            visited.clear();
+        }
+        return false;
+    }
+
     protected boolean containsName(String name){
         return this.getIndexOfVertex(name) >= 0;
     }
