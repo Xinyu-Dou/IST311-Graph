@@ -1,3 +1,5 @@
+import com.sun.jdi.DoubleValue;
+
 import java.util.*;
 
 public class LocationGraph {
@@ -8,7 +10,7 @@ public class LocationGraph {
     }
 
     public boolean addLocation(String location){
-        if(containsName(location) == true){
+        if(!containsName(location)){
             Vertex toAdd = new Vertex(location);
             this.vertices.add(toAdd);
             return true;
@@ -22,13 +24,13 @@ public class LocationGraph {
         Vertex start;
         Vertex end;
 
-
         int index = this.getIndexOfVertex(locationA);
         if (index >= 0){
             start = this.vertices.get(index);
         } else{
             this.addLocation(locationA);
-            start = this.vertices.get(getIndexOfVertex(locationA));
+            index = this.getIndexOfVertex(locationA);
+            start = this.vertices.get(index);
         }
 
         index = this.getIndexOfVertex(locationB);
@@ -40,14 +42,76 @@ public class LocationGraph {
         }
 
         Edge toAdd = new Edge(end,distance);
-        if(start.containsEdge(toAdd)){
+        if(!start.containsEdge(toAdd)){
             start.edges.add(toAdd);
             return true;
         }
         return false;
     }
 
+    public Double findDistanceBreadthFirst(String locationA, String locationB){
+        ArrayList<Vertex> visited = new ArrayList<>();
+        Queue<Vertex> queue = new LinkedList<>();
+        Queue<Double> distance = new LinkedList<>();
 
+        int index = this.getIndexOfVertex(locationA);
+
+        queue.add(this.vertices.get(index));
+        visited.add(this.vertices.get(index));
+        distance.add(0.0);
+
+        while(!queue.isEmpty()){
+            Vertex current = queue.remove();
+            Double curr_dis = distance.remove();
+
+            if(current.locationName.equals(locationB)){
+                return curr_dis;
+            }
+
+            for(Edge edge: current.edges){
+                if(!visited.contains(edge.vertex)){
+                    queue.add(edge.vertex);
+                    visited.add(edge.vertex);
+                    distance.add(curr_dis + edge.distance);
+                }
+            }
+
+        }
+        return -1.0;
+    }
+
+    public Double findDistanceDepthFirst(String locationA, String locationB){
+        ArrayList<Vertex> visited = new ArrayList<>();
+        Queue<Vertex> queue = new LinkedList<>();
+        Queue<Double> distance = new LinkedList<>();
+
+        int index = this.getIndexOfVertex(locationA);
+
+        queue.add(this.vertices.get(index));
+        visited.add(this.vertices.get(index));
+        distance.add(0.0);
+
+        while(!queue.isEmpty()){
+            Vertex current = queue.remove();
+            Double curr_dis = distance.remove();
+
+            if(current.locationName.equals(locationB)){
+                return curr_dis;
+            }
+
+            for(Edge edge: current.edges){
+                if(!visited.contains(edge.vertex)){
+                    queue.add(edge.vertex);
+                    visited.add(edge.vertex);
+                    Double new_dis = 0.0;
+                    new_dis = curr_dis + edge.distance;
+                    distance.add(new_dis);
+                }
+            }
+
+        }
+        return -1.0;
+    }
 
     protected boolean containsName(String name){
         return this.getIndexOfVertex(name) >= 0;

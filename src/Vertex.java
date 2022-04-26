@@ -31,8 +31,12 @@ public class Vertex {
             if(edge.compareTo(toFind) == 1){
                 return true;
             };
-
         }
         return false;
+    }
+
+    @Override
+    public String toString(){
+        return locationName;
     }
 }
