@@ -18,6 +18,37 @@ public class LocationGraph {
 
 
 
+    public boolean addDistance(String locationA, String locationB, Double distance){
+        Vertex start;
+        Vertex end;
+
+
+        int index = this.getIndexOfVertex(locationA);
+        if (index >= 0){
+            start = this.vertices.get(index);
+        } else{
+            this.addLocation(locationA);
+            start = this.vertices.get(getIndexOfVertex(locationA));
+        }
+
+        index = this.getIndexOfVertex(locationB);
+        if(index >= 0){
+            end = this.vertices.get(index);
+        } else{
+            this.addLocation(locationB);
+            end = this.vertices.get(getIndexOfVertex(locationB));
+        }
+
+        Edge toAdd = new Edge(end,distance);
+        if(start.containsEdge(toAdd)){
+            start.edges.add(toAdd);
+            return true;
+        }
+        return false;
+    }
+
+
+
     protected boolean containsName(String name){
         return this.getIndexOfVertex(name) >= 0;
     }
