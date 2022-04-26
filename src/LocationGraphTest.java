@@ -47,5 +47,16 @@ class LocationGraphTest {
     }
 
 
-
+    @Test
+    void findDistanceDepthFirst() {
+        LocationGraph graph = new LocationGraph();
+        graph.addLocation("Wuhan");
+        graph.addLocation("New York");
+        graph.addLocation("State College");
+        graph.addLocation("Portland");
+        graph.addDistance("Wuhan", "Portland", 10.0);
+        graph.addDistance("Wuhan", "New York", 20.0);
+        graph.addDistance("Portland", "State College", 40.0);
+        System.out.println(graph.findDistanceDepthFirst("Wuhan","State College"));
+    }
 }
