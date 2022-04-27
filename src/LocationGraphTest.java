@@ -1,3 +1,4 @@
+import jdk.swing.interop.SwingInterOpUtils;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.*;
@@ -31,6 +32,7 @@ class LocationGraphTest {
         assertTrue(graph.addDistance("State College", "New York", 530.2));
         //adding an existing edge, return false
         assertFalse(graph.addDistance("Wuhan", "Portland", 1230.2));
+        System.out.print(graph);
     }
 
     @Test
@@ -67,11 +69,11 @@ class LocationGraphTest {
         Double result = 50.0;
         Double result2 = -1.0;
         //return distance if there is a distance between two locations
-        assertEquals(result, graph.findDistanceBreadthFirst("Wuhan","State College"));
+        assertEquals(result, graph.findDistanceDepthFirst("Wuhan","State College"));
         //return -1.0 if there is no distance between two locations
-        assertEquals(result2, graph.findDistanceBreadthFirst("New York","State College"));
+        assertEquals(result2, graph.findDistanceDepthFirst("New York","State College"));
         //return -1.0 if either location does not exist
-        assertEquals(result2, graph.findDistanceBreadthFirst("Miami","State College"));
+        assertEquals(result2, graph.findDistanceDepthFirst("Miami","State College"));
     }
 
     @Test
@@ -81,7 +83,7 @@ class LocationGraphTest {
         graph.addDistance("Wuhan", "Portland", 10.0);
         graph.addDistance("Wuhan", "New York", 20.0);
         graph.addDistance("Atlanta", "Miami", 40.0);
-        graph.addDistance("Miami", "Atlanta", 40.0);
+        graph.addDistance("Portland", "New York", 20.0);
         LocationGraph graph1 = new LocationGraph();
         graph1.addDistance("Wuhan", "Portland", 10.0);
         graph1.addDistance("Wuhan", "New York", 20.0);
@@ -91,5 +93,16 @@ class LocationGraphTest {
         //return false if there is no cycle
         assertFalse(graph1.detectCycle());
 
+    }
+
+    @Test
+    void testToString() {
+        LocationGraph graph = new LocationGraph();
+        graph.addLocation("State College");
+        graph.addDistance("Wuhan", "Portland", 10.0);
+        graph.addDistance("Wuhan", "New York", 20.0);
+        graph.addDistance("Atlanta", "Miami", 40.0);
+        graph.addDistance("Miami", "Atlanta", 40.0);
+        System.out.println(graph.toString());
     }
 }

@@ -18,8 +18,6 @@ public class LocationGraph {
         return false;
     }
 
-
-
     public boolean addDistance(String locationA, String locationB, Double distance){
         Vertex start;
         Vertex end;
@@ -41,9 +39,11 @@ public class LocationGraph {
             end = this.vertices.get(getIndexOfVertex(locationB));
         }
 
-        Edge toAdd = new Edge(end,distance);
-        if(!start.containsEdge(toAdd)){
-            start.edges.add(toAdd);
+        Edge toAddStart = new Edge(end,distance);
+        Edge toAddEnd = new Edge(start,distance);
+        if(!start.containsEdge(toAddStart) && !end.containsEdge(toAddEnd)){
+            start.edges.add(toAddStart);
+            end.edges.add(toAddEnd);
             return true;
         }
         return false;
@@ -53,6 +53,10 @@ public class LocationGraph {
         ArrayList<Vertex> visited = new ArrayList<>();
         Queue<Vertex> queue = new LinkedList<>();
         Queue<Double> distance = new LinkedList<>();
+
+        if(Objects.equals(locationA, locationB)){
+            return -1.0;
+        }
 
         if(!containsName(locationA) || !containsName(locationB)){
             return -1.0;
@@ -89,9 +93,14 @@ public class LocationGraph {
         Stack<Vertex> stack = new Stack();
         Stack<Double> distance = new Stack();
 
+        if(Objects.equals(locationA, locationB)){
+            return -1.0;
+        }
+
         if(!containsName(locationA) || !containsName(locationB)){
             return -1.0;
         }
+
         int index = this.getIndexOfVertex(locationA);
 
         stack.push(this.vertices.get(index));
@@ -123,16 +132,22 @@ public class LocationGraph {
     public Boolean detectCycle(){
         ArrayList<Vertex> visited = new ArrayList<>();
         Queue<Vertex> queue = new LinkedList<>();
+        Queue<Vertex> parent = new LinkedList<>();
         for (Vertex toCycle: this.vertices){
             visited.add(toCycle);
             queue.add(toCycle);
+            parent.add(toCycle);
             while(!queue.isEmpty()) {
                 Vertex current = queue.remove();
-
+                Vertex f_current = parent.remove();
                 for(Edge edge: current.edges){
+                    if(edge.vertex.getName().equals(f_current.getName())){
+                        continue;
+                    }
                     if(!visited.contains(edge.vertex)){
                         queue.add(edge.vertex);
                         visited.add(edge.vertex);
+                        parent.add(current);
                     }else{
                         return true;
                     }
@@ -163,15 +178,27 @@ public class LocationGraph {
     @Override
     public String toString(){
         StringBuilder str = new StringBuilder();
-        for(int i = 0; i < this.vertices.size(); i++){
-            Vertex a = this.vertices.get(i);
-            if(a.getEdges().size() == 0){
-                str.append(a.getName());
-                str.append(": -1\n");
-                continue;
+        str.append("\t");
+        for(int x = 0; x < this.vertices.size(); x++){
+            Vertex a = this.vertices.get(x);
+            str.append(a.getName());
+            str.append("\t");
+        }
+        str.append("\n");
+        for(int x = 0; x < this.vertices.size(); x++){
+            Vertex a = this.vertices.get(x);
+            str.append(a.getName());
+            str.append("\t");
+            for(int y = 0; y < this.vertices.size(); y++){
+                Vertex b = this.vertices.get(y);
+                str.append(String.format(" %.2f",findDistanceBreadthFirst(a.getName(),b.getName())));
+                str.append("\t");
             }
-            str.append(a.toString());
+            str.append('\n');
         }
         return str.toString();
     }
+
+
+
 }
