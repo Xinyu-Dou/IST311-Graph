@@ -37,6 +37,13 @@ public class Vertex {
 
     @Override
     public String toString(){
-        return locationName;
+        StringBuilder str = new StringBuilder();
+        str.append(String.format("%s: ",this.locationName));
+        for(int i =0; i< edges.size();i++){
+            Edge a = edges.get(i);
+            str.append(a.toString());
+        }
+        str.append("\n");
+        return str.toString();
     }
 }

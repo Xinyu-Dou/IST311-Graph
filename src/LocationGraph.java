@@ -152,4 +152,19 @@ public class LocationGraph {
         }
         return -1;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+        for(int i = 0; i < this.vertices.size(); i++){
+            Vertex a = this.vertices.get(i);
+            if(a.getEdges().size() == 0){
+                str.append(a.getName());
+                str.append(": -1\n");
+                continue;
+            }
+            str.append(a.toString());
+        }
+        return str.toString();
+    }
 }

@@ -36,4 +36,12 @@ public class Edge implements Comparable<Edge>{
         }
         return -1;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+        str.append(String.format("-- %.2f  -> %s  ", this.getWeight(),this.vertex.getName()));
+
+        return str.toString();
+    }
 }

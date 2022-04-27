@@ -63,10 +63,12 @@ class LocationGraphTest {
     @Test
     void detectCycle() {
         LocationGraph graph = new LocationGraph();
+        graph.addLocation("State College");
         graph.addDistance("Wuhan", "Portland", 10.0);
         graph.addDistance("Wuhan", "New York", 20.0);
-        graph.addDistance("Portland", "State College", 40.0);
-        graph.addDistance("Portland", "Wuhan", 40.0);
+        graph.addDistance("Atlanta", "Miami", 40.0);
+        graph.addDistance("Miami", "Atlanta", 40.0);
         System.out.println(graph.detectCycle());
+        System.out.println(graph.toString());
     }
 }
