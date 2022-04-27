@@ -54,6 +54,10 @@ public class LocationGraph {
         Queue<Vertex> queue = new LinkedList<>();
         Queue<Double> distance = new LinkedList<>();
 
+        if(!containsName(locationA) || !containsName(locationB)){
+            return -1.0;
+        }
+
         int index = this.getIndexOfVertex(locationA);
 
         queue.add(this.vertices.get(index));
