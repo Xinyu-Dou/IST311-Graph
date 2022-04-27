@@ -118,7 +118,7 @@ public class LocationGraph {
         Queue<Vertex> queue = new LinkedList<>();
         for (Vertex toCycle: this.vertices){
             while(!queue.isEmpty()) {
-0            }
+            }
             //delete all the things in arraylist and queue
             queue.clear();
             visited.clear();
