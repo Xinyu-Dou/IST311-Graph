@@ -45,8 +45,11 @@ class LocationGraphTest {
         graph.addDistance("Portland", "State College", 40.0);
         Double result = 50.0;
         Double result2 = -1.0;
+        //return distance if there is a distance between two locations
         assertEquals(result, graph.findDistanceBreadthFirst("Wuhan","State College"));
+        //return -1.0 if there is no distance between two locations
         assertEquals(result2, graph.findDistanceBreadthFirst("New York","State College"));
+        //return -1.0 if either location does not exist
         assertEquals(result2, graph.findDistanceBreadthFirst("Miami","State College"));
     }
 
@@ -61,7 +64,14 @@ class LocationGraphTest {
         graph.addDistance("Wuhan", "Portland", 10.0);
         graph.addDistance("Wuhan", "New York", 20.0);
         graph.addDistance("Portland", "State College", 40.0);
-        System.out.println(graph.findDistanceDepthFirst("Wuhan","State College"));
+        Double result = 50.0;
+        Double result2 = -1.0;
+        //return distance if there is a distance between two locations
+        assertEquals(result, graph.findDistanceBreadthFirst("Wuhan","State College"));
+        //return -1.0 if there is no distance between two locations
+        assertEquals(result2, graph.findDistanceBreadthFirst("New York","State College"));
+        //return -1.0 if either location does not exist
+        assertEquals(result2, graph.findDistanceBreadthFirst("Miami","State College"));
     }
 
     @Test
@@ -72,7 +82,14 @@ class LocationGraphTest {
         graph.addDistance("Wuhan", "New York", 20.0);
         graph.addDistance("Atlanta", "Miami", 40.0);
         graph.addDistance("Miami", "Atlanta", 40.0);
-        System.out.println(graph.detectCycle());
-        System.out.println(graph.toString());
+        LocationGraph graph1 = new LocationGraph();
+        graph1.addDistance("Wuhan", "Portland", 10.0);
+        graph1.addDistance("Wuhan", "New York", 20.0);
+        graph1.addDistance("Atlanta", "Miami", 40.0);
+        //return true if detecting cycle
+        assertTrue(graph.detectCycle());
+        //return false if there is no cycle
+        assertFalse(graph1.detectCycle());
+
     }
 }

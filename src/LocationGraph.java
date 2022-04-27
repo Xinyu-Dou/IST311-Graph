@@ -89,6 +89,9 @@ public class LocationGraph {
         Stack<Vertex> stack = new Stack();
         Stack<Double> distance = new Stack();
 
+        if(!containsName(locationA) || !containsName(locationB)){
+            return -1.0;
+        }
         int index = this.getIndexOfVertex(locationA);
 
         stack.push(this.vertices.get(index));
