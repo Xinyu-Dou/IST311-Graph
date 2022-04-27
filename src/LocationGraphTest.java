@@ -59,4 +59,14 @@ class LocationGraphTest {
         graph.addDistance("Portland", "State College", 40.0);
         System.out.println(graph.findDistanceDepthFirst("Wuhan","State College"));
     }
+
+    @Test
+    void detectCycle() {
+        LocationGraph graph = new LocationGraph();
+        graph.addDistance("Wuhan", "Portland", 10.0);
+        graph.addDistance("Wuhan", "New York", 20.0);
+        graph.addDistance("Portland", "State College", 40.0);
+        graph.addDistance("Portland", "Wuhan", 40.0);
+        System.out.println(graph.detectCycle());
+    }
 }

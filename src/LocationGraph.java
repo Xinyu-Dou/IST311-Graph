@@ -117,7 +117,19 @@ public class LocationGraph {
         ArrayList<Vertex> visited = new ArrayList<>();
         Queue<Vertex> queue = new LinkedList<>();
         for (Vertex toCycle: this.vertices){
+            visited.add(toCycle);
+            queue.add(toCycle);
             while(!queue.isEmpty()) {
+                Vertex current = queue.remove();
+
+                for(Edge edge: current.edges){
+                    if(!visited.contains(edge.vertex)){
+                        queue.add(edge.vertex);
+                        visited.add(edge.vertex);
+                    }else{
+                        return true;
+                    }
+                }
             }
             //delete all the things in arraylist and queue
             queue.clear();
