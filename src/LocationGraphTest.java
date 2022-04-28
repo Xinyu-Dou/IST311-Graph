@@ -103,6 +103,12 @@ class LocationGraphTest {
         graph.addDistance("Wuhan", "New York", 20.0);
         graph.addDistance("Atlanta", "Miami", 40.0);
         graph.addDistance("Miami", "Atlanta", 40.0);
-        System.out.println(graph.toString());
+        assertEquals("\tState College\tWuhan\tPortland\tNew York\tAtlanta\tMiami\t\n" +
+                "State College\t -1.00\t -1.00\t -1.00\t -1.00\t -1.00\t -1.00\t\n" +
+                "Wuhan\t -1.00\t -1.00\t 10.00\t 20.00\t -1.00\t -1.00\t\n" +
+                "Portland\t -1.00\t 10.00\t -1.00\t 30.00\t -1.00\t -1.00\t\n" +
+                "New York\t -1.00\t 20.00\t 30.00\t -1.00\t -1.00\t -1.00\t\n" +
+                "Atlanta\t -1.00\t -1.00\t -1.00\t -1.00\t -1.00\t 40.00\t\n" +
+                "Miami\t -1.00\t -1.00\t -1.00\t -1.00\t 40.00\t -1.00\t\n", graph.toString());
     }
 }
